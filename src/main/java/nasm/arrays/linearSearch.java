@@ -45,3 +45,6 @@ public class linearSearch {
 
  .end res
 */
+
+//how to return rsult
+//how to get number
