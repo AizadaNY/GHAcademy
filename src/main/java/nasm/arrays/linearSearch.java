@@ -8,14 +8,16 @@ public class linearSearch {
     found
      */
 
-    public boolean search(int[] arr, int num) {
-        boolean isNumberExist = false;
+    public int search(int[] arr, int num) {
+        int index=0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == num) {
-                isNumberExist = true;
+                index=i;
+            }else{
+                index=-1;
             }
         }
-        return isNumberExist;
+        return index;
     }
 
 
