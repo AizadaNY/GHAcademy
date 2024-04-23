@@ -10,4 +10,9 @@ public class SumOfArray {
 
         return result;
     }
+
+    //python arraySum(){
+    // }
+
+
 }

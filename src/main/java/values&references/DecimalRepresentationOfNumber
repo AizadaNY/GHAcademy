@@ -13,3 +13,28 @@ n=P2^0+P12^1+P2^2+P3^3+P4^4
 +     1
 __________________
  101000
+
+ Hexademical representation
+ 4.4 Number system conversions:      Result
+ 1. 0x1AF -> binary
+ 2. 11011110 -> hex                   1314
+ 3. 0x8E -> binary
+ 4. 31,301 -> hex
+ 5. 0x2F + 0x5C -> hex
+ 6. 0x8A - 0x1C -> hex
+ 7. 1011 * 1101 -> hex
+ 8. 0x3E & 0x51 -> hex
+ 9. 0x34E1 | 0x12FF -> hex
+
+hexademical table
+0  0000     9  1001
+1  0001     A  1010   10
+2  0010     B  1011   11
+3  0011     C  1100   12
+4  0100     D  1101   13
+5  0101     E  1110   14
+6  0110     F  1111   15
+7  0111
+8  1000
+
+
