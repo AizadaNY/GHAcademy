@@ -7,18 +7,20 @@ public class Matrix {
     */
 
     public int[][] multiplication(int[][] matrixA, int[][] matrixB) {
+        int rowA = matrixA.length;
+        int colB = matrixB.length;
+        int[][] result = new int[rowA][colB];
 
-        int rowA=matrixA.length;
-        int rowB=matrixB.length;
-        int[][] result=new int[rowA][rowB];
-
-        for (int i = 0; i < rowA; i++) {
-            for (int j = 0; j < rowB; j++) {
-                matrixA[rowA]
+        for (int k = 0; k < result.length; k++) {
+            for (int i = 0; i < rowA; i++) {
+                for (int j = 0; j < colB; j++) {
+                    result[k][i] += matrixA[i][j] * matrixB[j][i];
+                }
             }
         }
 
-
-
+        return result;
     }
+
+    
 }
