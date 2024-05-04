@@ -13,79 +13,107 @@ public class Matrix {
     */
 
     public static void main(String[] args) {
-        int size=50;
-        int[][] matrixA=new int[size][size];
-        int[][] matrixB=new int[size][size];
-        int[][] result = new int[size][size];
 
-        //assign values to matrix
-        for (int i = 0; i <size ; i++) {
-            for (int j = 0; j <size ; j++) {
-                Random random=new Random();
-                matrixA[i][j]= random.nextInt(100);
-                matrixB[i][j]= random.nextInt(100);
-            }
-        }
+    }
 
-        //Basic Matrix multiplication
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                for (int k = 0; k < size; k++) {
-                    result[i][j]+=matrixA[j][k]*matrixB[k][j];
+    public int[][] basicMultiplication(int[][] matrixA,int[][] matrixB,int[][] result){
+        int rowA=matrixA.length;
+        int columnB=matrixB[0].length;
+
+        for (int i = 0; i < rowA; i++) {
+            for (int j = 0; j <columnB ; j++) {
+                for (int k = 0; k <columnB ; k++) {
+                    result[i][j]=matrixA[i][k]*matrixB[k][j];
                 }
             }
         }
+    }
 
-        //Matrix multiplication with Transposing
-        //The transpose of a matrix is given by interchanging rows and columns.
+    public void multiplicationWithTransposing(int[][] matrixA, int[][] matrixB,int[][] result) {
+        int rowA=matrixA.length;
+        int columnB=matrixB[0].length;
+
+        for (int i = 0; i < rowA; i++) {
+            for (int j = 0; j <columnB ; j++) {
+                for (int k = 0; k <columnB ; k++) {
+                    result[i][j]=matrixA[i][k]*matrixB[j][k];
+                }
+            }
+        }
+    }
+
+    public void TiledMultiplication(int[][] matrixA,int[][] matrixB,int[][] result,int blockSize){
+        int rowA=matrixA.length;
+        int columnA=matrixA[0].length;
+        int columnB=matrixB[0].length;
+
+        for (int i = 0; i <rowA ; i+=blockSize) {
+            for (int j = 0; j <columnB ; j+=blockSize) {
+                for (int k = 0; k <columnA ; k+=blockSize) {
+
+                    for (int ii = 0; ii <Math.min(i+blockSize, rowA) ; ii++) {
+                        for (int jj = 0; jj <Math.min(j+blockSize, columnB) ; jj++) {
+                            for (int kk = 0; kk <Math.min(k+blockSize, columnA) ; kk++) {
+                                result[ii][jj]=matrixA[ii][kk]*matrixB[kk][jj];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void TiledMultiplicationWithTransposing(int[][] matrixA,int[][] transposedB,int[][] result,int blockSize){
+        int rowA=matrixA.length;
+        int columnA=matrixA[0].length;
+        int columnB=transposedB[0].length;
+
+        for (int i = 0; i <rowA ; i+=blockSize) {
+            for (int j = 0; j <columnB ; j+=blockSize) {
+                for (int k = 0; k <columnA ; k+=blockSize) {
+
+                    for (int ii = 0; ii <Math.min(i+blockSize, rowA) ; ii++) {
+                        for (int jj = 0; jj <Math.min(j+blockSize, columnB) ; jj++) {
+                            for (int kk = 0; kk <Math.min(k+blockSize, columnA) ; kk++) {
+                                result[ii][jj]=matrixA[ii][kk]*transposedB[jj][kk];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public int[][] generateMatrix(int row, int column) {
+        int[][] matrix = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                Random random = new Random();
+                matrix[i][j] = random.nextInt(1000);
+
+            }
+        }
+
+        return matrix;
+    }
+
+    //The transpose of a matrix is given by interchanging rows and columns.
+    public int[][] transpose(int[][] matrix) {
         int temp;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                temp=matrixA[i][j];
-                matrixA[i][j]=matrixB[j][i];
-                matrixB[j][i]=temp;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
         }
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                for (int k = 0; k < size; k++) {
-                    result[i][j]+=matrixA[j][k]*matrixB[j][k];
-                }
-            }
-        }
-
-        //Tiled Matrix multiplication
-
-
-
-
-
-
-
-
+        return matrix;
     }
 
 
 
 
-
-
-    public int[][] multiplicationWithTransposing(int[][] matrixA, int[][] matrixB) {
-        int rowA = matrixA.length;
-        int colB = matrixB.length;
-        int[][] result = new int[rowA][colB];
-
-        for (int k = 0; k < result.length; k++) {
-            for (int i = 0; i < rowA; i++) {
-                for (int j = 0; j < colB; j++) {
-                    result[k][i] += matrixA[i][j] * matrixB[i][j];
-                }
-            }
-        }
-
-        return result;
-    }
-
-    
 }
