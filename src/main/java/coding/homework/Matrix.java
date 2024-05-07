@@ -16,7 +16,7 @@ public class Matrix {
 
     }
 
-    public int[][] basicMultiplication(int[][] matrixA,int[][] matrixB,int[][] result){
+    public void basicMultiplication(int[][] matrixA,int[][] matrixB,int[][] result){
         int rowA=matrixA.length;
         int columnB=matrixB[0].length;
 
