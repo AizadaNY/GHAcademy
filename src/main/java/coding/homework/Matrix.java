@@ -91,7 +91,6 @@ public class Matrix {
             for (int j = 0; j < column; j++) {
                 Random random = new Random();
                 matrix[i][j] = random.nextInt(1000);
-
             }
         }
 

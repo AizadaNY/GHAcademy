@@ -11,21 +11,17 @@ import java.util.zip.ZipOutputStream;
 
 public class Compressor {
 
-    public static void compress(String filePath) {
-        try {
-            File file = new File(filePath);
-            String zipFileName = file.getName().concat(".zip");
-            FileOutputStream fos = new FileOutputStream(zipFileName);
-            ZipOutputStream zos = new ZipOutputStream(fos);
-            zos.putNextEntry(new ZipEntry(file.getName()));
-            byte[] bytes = Files.readAllBytes(Paths.get(filePath));
-            zos.write(bytes, 0, bytes.length);
-            zos.closeEntry();
-            zos.close();
-        } catch (FileNotFoundException ex) {
-            System.err.format("The file %s does not exist", filePath);
-        } catch (IOException ex) {
-            System.err.println("I/O error: " + ex);
-        }
+    public static void compress2(String filePath) throws IOException {
+
+        File f = new File("C:\\Users\\Aizada\\GH Academy Homework\\CompressedTest.zip");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
+        ZipEntry e = new ZipEntry("mytext.txt");
+        out.putNextEntry(e);
+
+        byte[] data = ReadFile.readFileInListBytes(filePath);
+        out.write(data, 0, data.length);
+        out.closeEntry();
+
+        out.close();
     }
 }

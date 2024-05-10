@@ -1,5 +1,7 @@
 package project1;
 
+import org.testng.Assert;
+
 import java.io.IOException;
 
 public class Main {
@@ -14,6 +16,21 @@ public class Main {
         for (byte b:list2) {
             System.out.println(b);
         }
+
+//        Compressor.compress2(path);
+        String sourcePath="C:\\Users\\Aizada\\GH Academy Homework\\CompressedTest.zip";
+//        String targetPath="C:\\Users\\Aizada\\GH Academy Homework\\DecompressedFile.txt";
+//        String targetPath="C:\\Users\\Aizada\\GH Academy Homework";
+//        Decompressor.unzip(sourcePath,targetPath);
+        String path2="C:\\Users\\Aizada\\GH Academy Homework\\mytext.txt";
+        byte[] list3= ReadFile.readFileInListBytes(path2);
+        for (byte b:list3) {
+            System.out.println(b);
+        }
+
+
+       Assert.assertEquals(list2, list3);
+
 
     }
 }
