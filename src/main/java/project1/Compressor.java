@@ -16,8 +16,8 @@ public class Compressor {
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
         ZipEntry e = new ZipEntry(fileName);
         out.putNextEntry(e);
-//        byte[] data = ReadFile.readFileInListBytes(filePath);
-//        out.write(data, 0, data.length);
+        byte[] data = ReadFile.readFileInListBytes(inputFilePath);
+        out.write(data, 0, data.length);
         out.closeEntry();
         out.close();
         return targetFilePath;

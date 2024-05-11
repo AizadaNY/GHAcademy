@@ -19,6 +19,7 @@ public class Decompressor {
             byte[] buffer = new byte[1024];
             while ((entry = zis.getNextEntry()) != null) {
                path=destFolder + File.separator + entry.getName();
+               System.out.println("Unzipped file path "+path);
                 File newFile = new File(path);
                 if (entry.isDirectory()) {
                     newFile.mkdirs();
