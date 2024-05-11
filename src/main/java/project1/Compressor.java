@@ -11,17 +11,15 @@ import java.util.zip.ZipOutputStream;
 
 public class Compressor {
 
-    public static void compress2(String filePath) throws IOException {
-
-        File f = new File("C:\\Users\\Aizada\\GH Academy Homework\\CompressedTest.zip");
+    public static String  compress(String inputFilePath,String targetFilePath,String fileName) throws IOException {
+        File f = new File(targetFilePath);
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
-        ZipEntry e = new ZipEntry("mytext.txt");
+        ZipEntry e = new ZipEntry(fileName);
         out.putNextEntry(e);
-
-        byte[] data = ReadFile.readFileInListBytes(filePath);
-        out.write(data, 0, data.length);
+//        byte[] data = ReadFile.readFileInListBytes(filePath);
+//        out.write(data, 0, data.length);
         out.closeEntry();
-
         out.close();
+        return targetFilePath;
     }
 }

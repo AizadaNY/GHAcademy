@@ -24,10 +24,27 @@ public interface ReadFile {
  //check duplicate
      */
 
+    public static byte[] readFileInListBytes(String filePath) {
+        byte[] lines = new byte[0];
+        try {
+            lines = Files.readAllBytes(Paths.get(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+
+
+
+
+
+
+
     public static StringBuilder read(String filePath) throws IOException {
         File file = new File(filePath);
         BufferedReader br = new BufferedReader(new FileReader(file));
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         String line;
 
         while ((line = br.readLine()) != null) {
@@ -39,41 +56,19 @@ public interface ReadFile {
     }
 
 
-    public static List<String> readFileInList(String fileName)
-    {
+    public static List<String> readFileInList(String fileName) {
         List<String> lines = Collections.emptyList();
         try {
             lines = Files.readAllLines(
                     Paths.get(fileName),
                     StandardCharsets.UTF_8);
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
 
             // do something
             e.printStackTrace();
         }
         return lines;
     }
-
-    public static byte[] readFileInListBytes(String fileName)
-    {
-        byte [] lines = new byte[0];
-        try {
-            lines = Files.readAllBytes(Paths.get(fileName));
-        }
-
-        catch (IOException e) {
-
-            // do something
-            e.printStackTrace();
-        }
-        return lines;
-    }
-
-
-
-
 
 
 

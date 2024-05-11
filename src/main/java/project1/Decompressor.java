@@ -11,31 +11,15 @@ import java.util.zip.*;
 
 public class Decompressor {
 
-    public static void decompress(String inputPath,String outputPath) throws IOException {
 
-        FileInputStream inputStream = new FileInputStream(inputPath);
-        FileOutputStream outputStream = new FileOutputStream(outputPath);
-        InflaterInputStream decompresser = new InflaterInputStream(inputStream);
-        byte contents;
-
-            while ((contents = (byte) decompresser.read()) != -1) {
-                outputStream.write(contents);}
-
-
-
-        outputStream.close();
-        decompresser.close();
-        System.out.println("File un-compressed today");
-    }
-
-
-    // Method to unzip files
-    public static void unzip(String zipFile, String destFolder) throws IOException {
+    public static String  decompress(String zipFile, String destFolder) throws IOException {
+        String path="";
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
             ZipEntry entry;
             byte[] buffer = new byte[1024];
             while ((entry = zis.getNextEntry()) != null) {
-                File newFile = new File(destFolder + File.separator + entry.getName());
+               path=destFolder + File.separator + entry.getName();
+                File newFile = new File(path);
                 if (entry.isDirectory()) {
                     newFile.mkdirs();
                 } else {
@@ -49,6 +33,7 @@ public class Decompressor {
                 }
             }
         }
+        return path;
     }
 }
 
