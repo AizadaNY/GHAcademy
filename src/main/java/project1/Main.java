@@ -24,5 +24,6 @@ public class Main {
         String unzippedFilePath=Decompressor.decompress(zippedFilePath,userDir);
         byte[] fileAfterZip= ReadFile.readFileInListBytes(unzippedFilePath);
         Assert.assertEquals(fileBeforeZip, fileAfterZip);
+
     }
 }

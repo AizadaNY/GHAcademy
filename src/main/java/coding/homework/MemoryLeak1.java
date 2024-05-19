@@ -2,7 +2,7 @@ package coding.homework;
 
 
 
-import jdk.internal.net.http.common.Log;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class MemoryLeak1 {
             list.add(random.nextDouble());
         }
         Logger.getLogger("****Executed Methods***");
-        Log.logError("Error");
+
 //        Log.info("Log inside method the list");
 
     }

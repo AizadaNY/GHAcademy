@@ -1,15 +1,8 @@
 package project1;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.List;
-import java.util.zip.InflaterInputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 public interface ReadFile {
     /*
     P1
@@ -21,7 +14,6 @@ public interface ReadFile {
     5. Write decompressed file into (readable.txt)
     6. Compare each byte of two files input.txt vs readable.txt
     Harder version: Implement Huffman compression
- //check duplicate
      */
 
     public static byte[] readFileInListBytes(String filePath) {
@@ -33,13 +25,6 @@ public interface ReadFile {
         }
         return lines;
     }
-
-
-
-
-
-
-
 
     public static StringBuilder read(String filePath) throws IOException {
         File file = new File(filePath);
@@ -56,19 +41,7 @@ public interface ReadFile {
     }
 
 
-    public static List<String> readFileInList(String fileName) {
-        List<String> lines = Collections.emptyList();
-        try {
-            lines = Files.readAllLines(
-                    Paths.get(fileName),
-                    StandardCharsets.UTF_8);
-        } catch (IOException e) {
 
-            // do something
-            e.printStackTrace();
-        }
-        return lines;
-    }
 
 
 
