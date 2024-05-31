@@ -29,8 +29,9 @@ public class Calculator {
             case "SUB":
                 result=num1-num2;
             case "MOD":
-                double div=num1/num2;
-                Integer i=Double.valueOf(div);
+                Math.round(num1);
+                Math.round(num2);
+                int div= (int) (num1/num2);
                 result=num1-(div*num2);
 
             case "POW":
