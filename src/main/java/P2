@@ -1,0 +1,15 @@
+x = 5;
+if ( x > 3) {
+  y = x + 2
+}else {
+  y= x * (2 + 3);
+}
+print y;
+
+
+<program>::=<statement>|<program><separators><statement>
+<statement>::=<exp>|<if_statement>
+<separator>::="\n"|";"
+<if_statement>::="if" <condition>
+
+
