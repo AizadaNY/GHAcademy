@@ -31,18 +31,30 @@ public interface ReadFile {
         return lines;
     }
 
-    public static StringBuilder read(String filePath) throws IOException {
+    public static StringBuilder read(String filePath) throws IOException,CompressionExeption {
         StringBuilder sb = new StringBuilder();
         try {
             File file = new File(filePath);
             BufferedReader br = new BufferedReader(new FileReader(file));
             Map<String,Short> wordToCode=new HashMap<String,Short>();
             String line = "";
-
+            Short codeCounter = 0;
             while (line != null) {
                 line=br.readLine();
                 String[] word=line.split("(?<=\\s)|(?=\\s)");
+                for (String w:word) {
+                    Short exCode=wordToCode.get(w);
+                    if(exCode==null){
+                        wordToCode.put(w, codeCounter);
+                        codeCounter++;
+                        if(codeCounter==Short.MAX_VALUE){
+                            throw new CompressionExeption("Too many words in the file");
+                        }
+                    }
+                }
             }
+
+            if(wordToCode.get())
             br.close();
             System.out.println(sb);
             return sb;
