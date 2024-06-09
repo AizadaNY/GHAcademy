@@ -31,33 +31,38 @@ public interface ReadFile {
         return lines;
     }
 
-    public static StringBuilder read(String filePath) throws IOException,CompressionExeption {
+    public static StringBuilder read(String filePath) throws IOException, CompressionExeption {
         StringBuilder sb = new StringBuilder();
         try {
             File file = new File(filePath);
             BufferedReader br = new BufferedReader(new FileReader(file));
-            Map<String,Short> wordToCode=new HashMap<String,Short>();
-            String line = "";
+
+            ByteArrayOutputStream codeText=new ByteArrayOutputStream();
+            Map<String, Short> wordToCode = new HashMap<String, Short>();
+            Map<Short, String> codeToWord = new HashMap<Short,String>();
+            String line = br.readLine();
             Short codeCounter = 0;
             while (line != null) {
-                line=br.readLine();
-                String[] word=line.split("(?<=\\s)|(?=\\s)");
-                for (String w:word) {
-                    Short exCode=wordToCode.get(w);
-                    if(exCode==null){
+                String[] word = line.split("(?<=\\s)|(?=\\s)");
+                for (String w : word) {
+                    Short exCode = wordToCode.get(w);
+                    if (exCode == null) {
                         wordToCode.put(w, codeCounter);
+                        codeToWord.put(codeCounter, w);
+                        byte high=(byte)(codeCounter >>>8);
+                        byte low=(byte)codeCounter;
+                        codeText.write(high);
+                        codeText.write(low);
                         codeCounter++;
-                        if(codeCounter==Short.MAX_VALUE){
+                        if (codeCounter == Short.MAX_VALUE) {
                             throw new CompressionExeption("Too many words in the file");
                         }
                     }
                 }
+                line = br.readLine();
             }
+            System.out.println("Number of words"+ codeCounter);
 
-            if(wordToCode.get())
-            br.close();
-            System.out.println(sb);
-            return sb;
         } catch (FileNotFoundException exception) {
             System.out.println("Sorry file not found on the location: " + filePath);
         } catch (IOException e) {
