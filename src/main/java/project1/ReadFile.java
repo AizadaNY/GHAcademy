@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface ReadFile {
+    String outputFile = "";
+
     /*
-    P1
+    P1"
     Easier version: A simple text compression algorithm -
     1. read input file (input.txt) +
     2. Identify all words in the text, assign a code to each
@@ -41,7 +43,7 @@ public interface ReadFile {
             Map<String, Short> wordToCode = new HashMap<String, Short>();
             Map<Short, String> codeToWord = new HashMap<Short,String>();
             String line = br.readLine();
-            Short codeCounter = 0;
+            short codeCounter = 0;
             while (line != null) {
                 String[] word = line.split("(?<=\\s)|(?=\\s)");
                 for (String w : word) {
@@ -53,6 +55,7 @@ public interface ReadFile {
                         byte low=(byte)codeCounter;
                         codeText.write(high);
                         codeText.write(low);
+
                         codeCounter++;
                         if (codeCounter == Short.MAX_VALUE) {
                             throw new CompressionExeption("Too many words in the file");
@@ -61,6 +64,11 @@ public interface ReadFile {
                 }
                 line = br.readLine();
             }
+
+            ObjectOutputStream writer=new ObjectOutputStream(new FileOutputStream(outputFile));
+            CompressionInfoHolder holder=new CompressionInfoHolder(codeToWord,codeText.toByteArray());
+            writer.writeObject(holder);
+            writer.flush();
             System.out.println("Number of words"+ codeCounter);
 
         } catch (FileNotFoundException exception) {
