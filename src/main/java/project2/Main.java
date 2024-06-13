@@ -6,7 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String input="";
+        String input="num_users=100," +
+                "config=config";
 
 
         ArrayList<Lexer.Token> tokens=new ArrayList<>();
