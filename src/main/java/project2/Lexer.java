@@ -52,6 +52,9 @@ public class Lexer implements Iterable<Lexer.Token> {
                        tokens.add(new Token(TokenType.NUMBERS, readNumber()));
                    } else if(isAlpha(input.charAt(current))){
                        String identifier=readIdentifier();
+                       if(identifier.equalsIgnoreCase("if")){
+                           tokens.add(new Token(TokenType.IFCONDITION, readCondition()));
+                       }
                        tokens.add(new Token(deriveTokenType(identifier),identifier));
                    }else{
                        throw new LexerError("Unsupported character"+ ch);
@@ -150,6 +153,6 @@ public class Lexer implements Iterable<Lexer.Token> {
         }
     }
     enum TokenType{
-        CONFIG,UPDATE,COMPUTE,SHOW,CONFIGS,STRING,NUMBERS,IDENTIFIER,REFERENCES,ASSIGNMENT,OPERATOR
+        CONFIG,UPDATE,COMPUTE,SHOW,CONFIGS,STRING,NUMBERS,IDENTIFIER,REFERENCES,ASSIGNMENT,OPERATOR,IFCONDITION,ELSECONDITION
     }
 }
