@@ -54,7 +54,7 @@ public class Lexer implements Iterable<Lexer.Token> {
                        String identifier=readIdentifier();
                        if(identifier.equalsIgnoreCase("if")){
                            tokens.add(new Token(TokenType.IFCONDITION, readCondition()));
-                       }
+                       }else if(identifier.equalsIgnoreCase("else"))
                        tokens.add(new Token(deriveTokenType(identifier),identifier));
                    }else{
                        throw new LexerError("Unsupported character"+ ch);
