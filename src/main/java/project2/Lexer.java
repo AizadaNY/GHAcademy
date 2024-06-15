@@ -1,4 +1,6 @@
 package project2;
+import jdk.nashorn.internal.runtime.regexp.joni.constants.internal.TokenType;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,20 +49,41 @@ public class Lexer implements Iterable<Lexer.Token> {
                    tokens.add(new Token(TokenType.REFERENCES, readReference()));
                    current++;
                    break;
+               case ';':
+                   tokens.add(new Token(TokenType.CODESEPERATOR, Character.toString(ch)));
+                   current++;
+                   break;
+               case '(':
+                   tokens.add(new Token(TokenType.OPENPARANTHESIS, Character.toString(ch)));
+                   current++;
+                   break;
+               case ')':
+                   tokens.add(new Token(TokenType.CLOSEPARANTHESIS, Character.toString(ch)));
+                   current++;
+                   break;
+               case '{':
+                   tokens.add(new Token(TokenType.OPENBRACKET, Character.toString(ch)));
+                   current++;
+                   break;
+               case '}':
+                   tokens.add(new Token(TokenType.CLOSERACKET, Character.toString(ch)));
+                   current++;
+                   break;
+               case '>':
+                   tokens.add(new Token(TokenType.COMPARISONSIGN, Character.toString(ch)));
+                   current++;
+                   break;
                default:
                    if(isDigit(input.charAt(current))){
                        tokens.add(new Token(TokenType.NUMBERS, readNumber()));
                    } else if(isAlpha(input.charAt(current))){
                        String identifier=readIdentifier();
-                       if(identifier.equalsIgnoreCase("if")){
-                           tokens.add(new Token(TokenType.IFCONDITION, readCondition()));
-                       }else if(identifier.equalsIgnoreCase("else"))
-                       tokens.add(new Token(deriveTokenType(identifier),identifier));
+                       if(identifier.equalsIgnoreCase("if")||identifier.equalsIgnoreCase("else")) {
+                           tokens.add(new Token(TokenType.CONDITION, identifier));
+                       }
                    }else{
                        throw new LexerError("Unsupported character"+ ch);
                    }
-
-
            }
        }
     }
@@ -71,6 +94,12 @@ public class Lexer implements Iterable<Lexer.Token> {
                 return TokenType.CONFIG;
             case "update":
                 return TokenType.UPDATE;
+            case "compute":
+                return TokenType.COMPUTE;
+            case "show":
+                return TokenType.SHOW;
+            case "configs":
+                return TokenType.CONFIGS;
             default:
                 return TokenType.IDENTIFIER;
 
@@ -153,6 +182,7 @@ public class Lexer implements Iterable<Lexer.Token> {
         }
     }
     enum TokenType{
-        CONFIG,UPDATE,COMPUTE,SHOW,CONFIGS,STRING,NUMBERS,IDENTIFIER,REFERENCES,ASSIGNMENT,OPERATOR,IFCONDITION,ELSECONDITION
+        CONFIG,UPDATE,COMPUTE,SHOW,CONFIGS,STRING,NUMBERS,IDENTIFIER,REFERENCES,ASSIGNMENT,OPERATOR,
+        CONDITION,OPENPARANTHESIS,CLOSEPARANTHESIS,OPENBRACKET,CLOSERACKET,CODESEPERATOR,COMPARISONSIGN
     }
 }
