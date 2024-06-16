@@ -1,13 +1,12 @@
 package project2;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.internal.TokenType;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 
-public class Lexer implements Iterable<Lexer.Token> {
 
+public class Lexer implements Iterable<Token> {
 
     private final String input;
     private final List<Token> tokens;
@@ -31,77 +30,84 @@ public class Lexer implements Iterable<Lexer.Token> {
                    current++;
                    break;
                case '=':
-                   tokens.add(new Token(TokenType.ASSIGNMENT, "="));
+                   tokens.add(new Token(Token.Type.ASSIGNMENT, "="));
                    current++;
                    break;
                case '*':
+                   tokens.add(new Token(Token.Type.MULTIPLY, Character.toString(ch)));
+                   current++;
+                   break;
                case '/':
+                   tokens.add(new Token(Token.Type.DIVISION, Character.toString(ch)));
+                   current++;
+                   break;
                case '-':
                case '+':
-                   tokens.add(new Token(TokenType.OPERATOR, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.OPERATOR, Character.toString(ch)));
                    current++;
                    break;
                case '"':
-                   tokens.add(new Token(TokenType.STRING, readString()));
+                   tokens.add(new Token(Token.Type.STRING, readString()));
                    current++;
                    break;
                case '%':
-                   tokens.add(new Token(TokenType.REFERENCES, readReference()));
+                   tokens.add(new Token(Token.Type.REFERENCES, readReference()));
                    current++;
                    break;
                case ';':
-                   tokens.add(new Token(TokenType.CODESEPERATOR, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.CODESEPERATOR, Character.toString(ch)));
                    current++;
                    break;
                case '(':
-                   tokens.add(new Token(TokenType.OPENPARANTHESIS, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.OPENPARANTHESIS, Character.toString(ch)));
                    current++;
                    break;
                case ')':
-                   tokens.add(new Token(TokenType.CLOSEPARANTHESIS, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.CLOSEPARANTHESIS, Character.toString(ch)));
                    current++;
                    break;
                case '{':
-                   tokens.add(new Token(TokenType.OPENBRACKET, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.OPENBRACKET, Character.toString(ch)));
                    current++;
                    break;
                case '}':
-                   tokens.add(new Token(TokenType.CLOSERACKET, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.CLOSERACKET, Character.toString(ch)));
                    current++;
                    break;
                case '>':
-                   tokens.add(new Token(TokenType.COMPARISONSIGN, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.COMPARISONSIGN, Character.toString(ch)));
                    current++;
                    break;
                default:
                    if(isDigit(input.charAt(current))){
-                       tokens.add(new Token(TokenType.NUMBERS, readNumber()));
+                       tokens.add(new Token(Token.Type.NUMBERS, readNumber()));
                    } else if(isAlpha(input.charAt(current))){
                        String identifier=readIdentifier();
                        if(identifier.equalsIgnoreCase("if")||identifier.equalsIgnoreCase("else")) {
-                           tokens.add(new Token(TokenType.CONDITION, identifier));
+                           tokens.add(new Token(Token.Type.CONDITION, identifier));
                        }
                    }else{
                        throw new LexerError("Unsupported character"+ ch);
                    }
+                   current++;
            }
        }
     }
 
-    private TokenType deriveTokenType(String identifier) {
+    private Token.Type deriveTokenType(String identifier) {
         switch (identifier){
             case "config":
-                return TokenType.CONFIG;
+                return Token.Type.CONFIG;
             case "update":
-                return TokenType.UPDATE;
+                return Token.Type.UPDATE;
             case "compute":
-                return TokenType.COMPUTE;
+                return Token.Type.COMPUTE;
             case "show":
-                return TokenType.SHOW;
+                return Token.Type.SHOW;
             case "configs":
-                return TokenType.CONFIGS;
+                return Token.Type.CONFIGS;
             default:
-                return TokenType.IDENTIFIER;
+                return Token.Type.IDENTIFIER;
 
         }
     }
@@ -118,7 +124,7 @@ public class Lexer implements Iterable<Lexer.Token> {
 
     private String readNumber() {
         StringBuilder builder=new StringBuilder();
-        current++;
+//        current++;
         while (current<input.length()&&isDigit(input.charAt(current))){
             builder.append(input.charAt(current));
             current++;
@@ -164,25 +170,5 @@ public class Lexer implements Iterable<Lexer.Token> {
     }
 
 
-    static class  Token{
-        final TokenType type;
-        final String value;
 
-        public Token(TokenType type, String value) {
-            this.type = type;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "Token{" +
-                    "type=" + type +
-                    ", value='" + value + '\'' +
-                    '}';
-        }
-    }
-    enum TokenType{
-        CONFIG,UPDATE,COMPUTE,SHOW,CONFIGS,STRING,NUMBERS,IDENTIFIER,REFERENCES,ASSIGNMENT,OPERATOR,
-        CONDITION,OPENPARANTHESIS,CLOSEPARANTHESIS,OPENBRACKET,CLOSERACKET,CODESEPERATOR,COMPARISONSIGN
-    }
 }

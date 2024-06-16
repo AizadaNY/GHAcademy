@@ -6,13 +6,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String input = """
-                config "num_users" = 100
-                config "num_requests" = 100
-                update "num_users" = 12
-                compute "result" = %num_users + %num_requests
-                """;
+//        String input = "config \"num_users\" = 100\n" +
+//                "config \"num_requests\" = 100\n" +
+//                "update \"num_users\" = 12\n" +
+//                "compute \"result\" = %num_users + %num_requests";
 
+        String input = "x = 5;\n" +
+                "if (x > 3) {\n" +
+                "  y = x + 2;\n" +
+                "} else {\n" +
+                "  y = x * (2 + 3);\n" +
+                "}\n" +
+                "print y;\n";
+
+//if else statement
 
 //        ArrayList<Lexer.Token> tokens=new ArrayList<>();
 //        tokens.add(new Lexer.Token(Lexer.TokenType.CONFIG,"Config"));
@@ -20,7 +27,7 @@ public class Main {
 //        tokens.add(new Lexer.Token(Lexer.TokenType.ASSIGNMENT,"z"));
 //        tokens.add(new Lexer.Token(Lexer.TokenType.NUMBERS ,"100"));
         Lexer lexer=new Lexer(input);
-        for (Lexer.Token token:lexer) {
+        for (Token token:lexer) {
             System.out.println(token);
         }
     }
