@@ -59,19 +59,19 @@ public class Lexer implements Iterable<Token> {
                    current++;
                    break;
                case '(':
-                   tokens.add(new Token(Token.Type.OPENPARANTHESIS, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.OPPAREN, Character.toString(ch)));
                    current++;
                    break;
                case ')':
-                   tokens.add(new Token(Token.Type.CLOSEPARANTHESIS, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.CLPARAN, Character.toString(ch)));
                    current++;
                    break;
                case '{':
-                   tokens.add(new Token(Token.Type.OPENBRACKET, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.OPBRACKET, Character.toString(ch)));
                    current++;
                    break;
                case '}':
-                   tokens.add(new Token(Token.Type.CLOSERACKET, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.CLBRACKET, Character.toString(ch)));
                    current++;
                    break;
                case '>':
@@ -85,6 +85,8 @@ public class Lexer implements Iterable<Token> {
                        String identifier=readIdentifier();
                        if(identifier.equalsIgnoreCase("if")||identifier.equalsIgnoreCase("else")) {
                            tokens.add(new Token(Token.Type.CONDITION, identifier));
+                       }else{
+                           tokens.add(new Token(Token.Type.IDENTIFIER, identifier));
                        }
                    }else{
                        throw new LexerError("Unsupported character"+ ch);
@@ -114,8 +116,17 @@ public class Lexer implements Iterable<Token> {
 
     private String readIdentifier() {
         StringBuilder builder=new StringBuilder();
-        current++;
+//        current++;
         while (current<input.length()&&isAlphaNumeric(input.charAt(current))){
+            builder.append(input.charAt(current));
+            current++;
+        }
+        return builder.toString();
+    }
+    private String readIfStatement() {
+        StringBuilder builder=new StringBuilder();
+        current++;
+        while (current<input.length()&&isAlpha(input.charAt(current))&&input.charAt(current)=='{'){
             builder.append(input.charAt(current));
             current++;
         }
