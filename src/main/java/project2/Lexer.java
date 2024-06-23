@@ -1,6 +1,8 @@
 package project2;
 
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 public class Lexer implements Iterable<Token> {
 
     private final String input;
-    private final List<Token> tokens;
+    public    List<Token> tokens;
     private int current;
 
     public Lexer(String input){
@@ -19,7 +21,7 @@ public class Lexer implements Iterable<Token> {
         tokenize();
     }
 
-    private void tokenize() {
+    public void tokenize() {
        while (current<input.length()){
            char ch=input.charAt(current);
            switch (ch){
@@ -42,8 +44,11 @@ public class Lexer implements Iterable<Token> {
                    current++;
                    break;
                case '-':
+                   tokens.add(new Token(Token.Type.ADDITION, Character.toString(ch)));
+                   current++;
+                   break;
                case '+':
-                   tokens.add(new Token(Token.Type.OPERATOR, Character.toString(ch)));
+                   tokens.add(new Token(Token.Type.PLUS, Character.toString(ch)));
                    current++;
                    break;
                case '"':
@@ -94,6 +99,7 @@ public class Lexer implements Iterable<Token> {
                    current++;
            }
        }
+
     }
 
     private Token.Type deriveTokenType(String identifier) {

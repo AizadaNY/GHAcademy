@@ -1,6 +1,7 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -26,10 +27,15 @@ public class Main {
 //        tokens.add(new Lexer.Token(Lexer.TokenType.STRING,"num_users"));
 //        tokens.add(new Lexer.Token(Lexer.TokenType.ASSIGNMENT,"z"));
 //        tokens.add(new Lexer.Token(Lexer.TokenType.NUMBERS ,"100"));
-        Lexer lexer=new Lexer(input);
-        for (Token token:lexer) {
-            System.out.println(token);
-        }
+        Lexer lexer = new Lexer(input);
+        lexer.tokenize();
+        List<Token> tokens=lexer.tokens;
+        Parser parser=new Parser(tokens);
+       ASTNode root =parser.parse();
+
     }
+
+
+
 
 }

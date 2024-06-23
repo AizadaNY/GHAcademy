@@ -1,12 +1,12 @@
 package project2;
 
-public class BinaryOp extends ASTNode {
+public class BinaryOpNode extends ASTNode {
 
     ASTNode leftNode;
     ASTNode rightNode;
     Token operationToken;
 
-    public BinaryOp(ASTNode leftNode, ASTNode rightNode, Token operationToken) {
+    public BinaryOpNode(ASTNode leftNode, ASTNode rightNode, Token operationToken) {
         this.leftNode = leftNode;
         this.rightNode = rightNode;
         this.operationToken = operationToken;
