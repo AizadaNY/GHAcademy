@@ -88,10 +88,12 @@ public class Lexer implements Iterable<Token> {
                        tokens.add(new Token(Token.Type.NUMBERS, readNumber()));
                    } else if(isAlpha(input.charAt(current))){
                        String identifier=readIdentifier();
-                       if(identifier.equalsIgnoreCase("if")||identifier.equalsIgnoreCase("else")) {
-                           tokens.add(new Token(Token.Type.CONDITION, identifier));
+                       if(identifier.equalsIgnoreCase("if")) {
+                           tokens.add(new Token(Token.Type.IFCONDITION, identifier));
+                       }else if(identifier.equalsIgnoreCase("else")){
+                           tokens.add(new Token(Token.Type.ELSECONDITION, identifier));
                        }else{
-                           tokens.add(new Token(Token.Type.IDENTIFIER, identifier));
+                           tokens.add(new Token(Token.Type.VAR, identifier));
                        }
                    }else{
                        throw new LexerError("Unsupported character"+ ch);

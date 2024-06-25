@@ -37,7 +37,42 @@ public class Parser {
         if(curToken.type== Token.Type.IDENTIFIER){
             return assignment();
         }
+        if(curToken.type==Token.Type.IFCONDITION){
+            return conditionBlock();
+        }
         return  expression();
+    }
+
+    /**
+     * If Condition::= if(condition) then statement
+     * String input = "x = 5;\n" +
+     *                 "if (x > 3) {\n" +
+     *                 "  y = x + 2;\n" +
+     *                 "} else {\n" +
+     *                 "  y = x * (2 + 3);\n" +
+     *                 "}\n" +
+     *                 "print y;\n";
+     */
+    private ASTNode conditionBlock() {
+       if(curToken.type==Token.Type.IFCONDITION) {
+           consume(Token.Type.IFCONDITION);
+           consume(Token.Type.OPPAREN);
+           BinaryOpNode(varNode,NumberNode,token);
+           return block();
+
+       }else{
+           while (curToken.type!=Token.Type.ELSECONDITION){
+               consume(curToken.type);
+           }
+           return block();
+       }
+
+
+
+    }
+
+    private ASTNode condition(){
+
     }
 
     private ASTNode assignment() {
