@@ -57,7 +57,7 @@ public class Parser {
        if(curToken.type==Token.Type.IFCONDITION) {
            consume(Token.Type.IFCONDITION);
            consume(Token.Type.OPPAREN);
-           BinaryOpNode(varNode,NumberNode,token);
+
            return block();
 
        }else{
@@ -73,6 +73,7 @@ public class Parser {
 
     private ASTNode condition(){
 
+        BinaryOpNode(varNode,NumberNode,token);
     }
 
     private ASTNode assignment() {
