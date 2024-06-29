@@ -71,9 +71,15 @@ public class Parser {
 
     }
 
-    private ASTNode condition(){
+    private ASTNode condition() {
+        ASTNode node = factor();
 
-        BinaryOpNode(varNode,NumberNode,token);
+        while (curToken != null || (curToken.type == Token.Type.COMPARISONSIGN )) {
+            Token token = curToken;
+            consume(curToken.type);
+            node = new BinaryOpNode(node, factor(), token);
+        }
+        return node;
     }
 
     private ASTNode assignment() {
