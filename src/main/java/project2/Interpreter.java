@@ -8,7 +8,7 @@ public class Interpreter {
 
     private final Map<String,Integer> valueTable=new HashMap<>();
 
-    int visit(ASTNode node){
+     int visit(ASTNode node){
         if(node instanceof BinaryOpNode){
             int left=visit(((BinaryOpNode) node).leftNode);
             int right=visit(((BinaryOpNode) node).rightNode);
