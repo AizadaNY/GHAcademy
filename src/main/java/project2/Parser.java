@@ -16,10 +16,10 @@ public class Parser {
     }
 
     public ASTNode parse() {
-        List<ASTNode> statements=new ArrayList<>();
-        while (curToken!=null){
+        List<ASTNode> statements = new ArrayList<>();
+        while (curToken != null) {
             statements.add(statement());
-            if(curToken!=null&& curToken.type==Token.Type.CODESEPERATOR){
+            if (curToken != null && curToken.type == Token.Type.CODESEPERATOR) {
                 consume(curToken.type);
             }
         }
@@ -28,75 +28,69 @@ public class Parser {
     }
 
     private ASTNode statement() {
-        if(curToken.type==Token.Type.OPBRACKET){
+        if (curToken.type == Token.Type.OPBRACKET) {
             return block();
         }
-        if(curToken.type==Token.Type.VAR){
+        if (curToken.type == Token.Type.VAR) {
             return declaration();
         }
-        if(curToken.type== Token.Type.IDENTIFIER){
+        if (curToken.type == Token.Type.IDENTIFIER) {
             return assignment();
         }
-        if(curToken.type==Token.Type.IFCONDITION){
+        if (curToken.type == Token.Type.IFCONDITION) {
             return conditionBlock();
         }
-        return  expression();
+        return expression();
     }
 
     /**
      * If Condition::= if(condition) then statement
      * String input = "x = 5;\n" +
-     *                 "if (x > 3) {\n" +
-     *                 "  y = x + 2;\n" +
-     *                 "} else {\n" +
-     *                 "  y = x * (2 + 3);\n" +
-     *                 "}\n" +
-     *                 "print y;\n";
+     * "if (x > 3) {\n" +
+     * "  y = x + 2;\n" +
+     * "} else {\n" +
+     * "  y = x * (2 + 3);\n" +
+     * "}\n" +
+     * "print y;\n";
      */
     private ASTNode conditionBlock() {
-       if(curToken.type==Token.Type.IFCONDITION) {
-           consume(Token.Type.IFCONDITION);
-           consume(Token.Type.OPPAREN);
-
-           return block();
-
-       }else{
-           while (curToken.type!=Token.Type.ELSECONDITION){
-               consume(curToken.type);
-           }
-           return block();
-       }
-
-
-
+        consume(Token.Type.IFCONDITION);
+        if (condition() == true) {
+            return block();
+        } else {
+            while (curToken.type != Token.Type.ELSECONDITION) {
+                consume(curToken.type);
+            }
+            consume(Token.Type.ELSECONDITION);
+            return block();
+        }
     }
 
-    private ASTNode condition() {
+    private boolean condition() {
         ASTNode node = factor();
-
-        while (curToken != null || (curToken.type == Token.Type.COMPARISONSIGN )) {
+        while (curToken != null || (curToken.type == Token.Type.COMPARISONSIGN)) {
             Token token = curToken;
             consume(curToken.type);
             node = new BinaryOpNode(node, factor(), token);
         }
-        return node;
+        return true;
     }
 
     private ASTNode assignment() {
-        Var varNode=var();
+        Var varNode = var();
         consume(Token.Type.ASSIGNMENT);
         return new Assign(varNode, expression());
     }
 
     private ASTNode declaration() {
         consume(Token.Type.VAR);
-        Var varNode=var();
+        Var varNode = var();
         consume(Token.Type.ASSIGNMENT);
         return new VarDecl(varNode, expression());
     }
 
     private Var var() {
-        Token token=curToken;
+        Token token = curToken;
         consume(Token.Type.IDENTIFIER);
         return new Var(token);
 
@@ -104,8 +98,8 @@ public class Parser {
 
     private ASTNode block() {
         consume(Token.Type.OPBRACKET);
-        List<ASTNode> statements=new ArrayList<>();
-        while (curToken.type!=Token.Type.CLBRACKET){
+        List<ASTNode> statements = new ArrayList<>();
+        while (curToken.type != Token.Type.CLBRACKET) {
             statements.add(statement());
         }
         consume(Token.Type.CLBRACKET);
@@ -139,19 +133,19 @@ public class Parser {
     private ASTNode factor() {
         Token token = curToken;
 
-        if(token.type==Token.Type.NUMBERS){
+        if (token.type == Token.Type.NUMBERS) {
             consume(Token.Type.NUMBERS);
             return new NumberNode(token);
         }
 
-        if(token.type==Token.Type.OPPAREN){
+        if (token.type == Token.Type.OPPAREN) {
             consume(Token.Type.OPPAREN);
-            ASTNode node=expression();
+            ASTNode node = expression();
             consume(Token.Type.CLPARAN);
             return node;
         }
 
-        throw new ParserException("Unexpected token found for parser "+token);
+        throw new ParserException("Unexpected token found for parser " + token);
     }
 
     private void consume(Token.Type type) {

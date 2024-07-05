@@ -30,6 +30,10 @@ public class Main {
         Lexer lexer = new Lexer(input);
         lexer.tokenize();
         List<Token> tokens=lexer.tokens;
+        for (Token token:tokens) {
+           System.out.println("Token Type: "+token.type + ",   Value: "+ token.value);
+        }
+
         Parser parser=new Parser(tokens);
        ASTNode root =parser.parse();
 
