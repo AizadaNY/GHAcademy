@@ -1,4 +1,4 @@
-package project1;
+package project1.variant2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +17,7 @@ public class Compressor {
         ZipEntry e = new ZipEntry(fileName);
         out.putNextEntry(e);
         byte[] data = ReadFile.readFileInListBytes(inputFilePath);
+
         out.write(data, 0, data.length);
         out.closeEntry();
         out.close();
