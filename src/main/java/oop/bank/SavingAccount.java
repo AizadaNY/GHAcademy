@@ -1,13 +1,15 @@
 package oop.bank;
 
-public class SavingAccount implements Bank{
+public class SavingAccount implements Bank {
 
     String name;
     private String number;
+    private double balance;
 
-    public SavingAccount(String name, String number) {
+    public SavingAccount(String name, String number, double balance) {
         this.name = name;
         this.number = number;
+        this.balance = balance;
     }
 
     public String getNumber() {
@@ -19,8 +21,8 @@ public class SavingAccount implements Bank{
     }
 
     @Override
-    public void getBalance() {
-
+    public double getBalance() {
+        return balance;
     }
 
     @Override
@@ -32,4 +34,11 @@ public class SavingAccount implements Bank{
     public void withdraw() {
 
     }
+
+    public double deposit(double sum) {
+       return getBalance()+sum;
+    }
+
+
+
 }

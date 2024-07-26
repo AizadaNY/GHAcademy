@@ -1,14 +1,14 @@
 package oop.bank;
 
-public class Accounts implements Bank{
+public class Accounts implements Bank {
     @Override
-    public long getBalance() {
-
+    public double getBalance() {
+        return 0.0;
     }
 
     @Override
-    public void deposit(long sum) {
-        getBalance()+sum;
+    public void deposit() {
+
     }
 
     @Override

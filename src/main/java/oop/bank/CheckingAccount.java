@@ -26,8 +26,8 @@ public class CheckingAccount implements Bank {
     }
 
     @Override
-    public void getBalance() {
-
+    public double getBalance() {
+     return 0.0;
     }
 
     @Override

@@ -2,7 +2,8 @@ package oop.bank;
 
 public interface Bank {
 
-    long getBalance();
+
+    double getBalance();
     void deposit();
     void withdraw();
 }
