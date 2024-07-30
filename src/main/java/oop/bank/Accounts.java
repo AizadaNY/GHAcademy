@@ -1,6 +1,7 @@
 package oop.bank;
 
-public class Accounts implements Bank {
+public abstract class Accounts implements Bank {
+
     @Override
     public double getBalance() {
         return 0.0;

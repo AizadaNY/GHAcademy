@@ -1,6 +1,6 @@
 package oop.bank;
 
-public class SavingAccount implements Bank {
+public class SavingAccount extends Accounts {
 
     String name;
     private String number;
@@ -30,13 +30,18 @@ public class SavingAccount implements Bank {
 
     }
 
-    @Override
-    public void withdraw() {
 
+    public double withdraw(double amount) {
+        if (balance > amount) {
+            balance = balance - amount;
+        } else {
+
+        }
+        return balance;
     }
 
-    public double deposit(double sum) {
-       return getBalance()+sum;
+    public double deposit(double amount) {
+       return balance+amount;
     }
 
 
